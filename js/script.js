@@ -30,6 +30,49 @@ var $totalAmount = $("#totalAmount");
 // variable that will store total amount
 var total = 0;
 
+// variables that select each payment option
+var $paymentOption = $("#payment");
+var $credit = $("#credit-card");
+var $payPal = $("#paypal");
+var $bitCoin = $("#bitcoin");
+
+// initially selects credit card
+$paymentOption.val("credit card");
+
+// initially hides everything until payment option is chosen
+$payPal.hide();
+$bitCoin.hide();
+
+// function that checks if payment option has been selected
+$paymentOption.change(function(){
+  if ($paymentOption.val() == "paypal"){
+    // if selected then show payPal info
+    $payPal.show();
+  }else{
+    // if unselected then hide it
+    $payPal.hide();
+  }
+});
+
+// function that checks if payment option has been selected
+$paymentOption.change(function(){
+  if ($paymentOption.val() == "bitcoin"){
+    $bitCoin.show();
+  }else{
+    $bitCoin.hide();
+  }
+});
+
+// function that checks if payment option has been selected
+$paymentOption.change(function(){
+  if ($paymentOption.val() == "credit card"){
+    $credit.show();
+  }else{
+    $credit.hide();
+  }
+});
+
+
 // function that will check if main conference checkbox is checked
 $main.change(function(){
   // once checked show total amount
