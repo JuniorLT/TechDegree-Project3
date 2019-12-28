@@ -36,6 +36,64 @@ var $credit = $("#credit-card");
 var $payPal = $("#paypal");
 var $bitCoin = $("#bitcoin");
 
+// variables that hold the regex to test value with
+var invalidName = (/^[\W]*$/);
+var validEmail = (/^[^@]+@[^@.]+\.[a-z]+$/i)
+var invalidCC = (/^[\d]{13,16}$/);
+var invalidZip = (/^[\d]{5}$/);
+var invalidCVV = (/^[\d]{3}$/);
+
+// variable that selects the submit button
+var $submit = $("button");
+
+// function that will stop the submit if invalid information is spotted
+$submit.on("click", function(event){
+  // conditional that checks if name is valid
+  if(invalidName.test($nameElem.val()) == true){
+    event.preventDefault();
+    // displays alert message saying name is invalid
+    alert("Whoops: Invalid Name");
+
+    // another conditional that checks if email is valid and formatted
+  } else if (validEmail.test($("#mail").val()) == false){
+    event.preventDefault();
+    // displays alert message saying email is invalid
+    alert("Whoops: Invalid Email");
+
+    // another conditional that checks if you've selected an activity or not
+    // checks the length(amount) of how many check boxes have been checked
+    // if length(amount) is equal to 7 (number at which none of the activity boxes are checked)
+    // (because apparently the options under colors for t-shirts count as checked)
+    // then do the following...
+  } else if ($(":checked").length === 7){
+    event.preventDefault();
+    // displays alert message saying that you haven't chosen an activity
+    alert("Whoops: You need to select an Activity");
+
+    // conditional that checks if credit card option has been selected
+  } else if($paymentOption.val() == "credit card"){
+    // nested conditional that checks when cc payment option is Selected
+    // also checks if cc number is valid
+      if(invalidCC.test($("#cc-num").val()) == false){
+        event.preventDefault();
+        // displays alert message saying invalid cc number
+        alert("Whoops: Invalid Credit Card Number");
+
+        // conditional that checks if zip code is valid
+      }else if (invalidZip.test($("#zip").val()) == false){
+        event.preventDefault();
+        // displays alert message saying zip is invalid
+        alert("Whoops: Invalid Zip Code");
+
+        // conditional that checks if cvv is valid
+      }else if (invalidCVV.test($("#cvv").val()) == false){
+        event.preventDefault();
+        // displays alert message saying cvv is invalid
+        alert("Whoops: Invalid CVV");
+      }
+    }
+});
+
 // initially selects credit card
 $paymentOption.val("credit card");
 
