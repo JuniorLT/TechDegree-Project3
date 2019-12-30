@@ -19,10 +19,10 @@
       <fieldset>
         <legend>Basic Info</legend>
 
-        <label for="name">Name:</label>
+        <label id="nameLabel" for="name">Name:</label>
         <input type="text" id="name" name="user-name">
 
-        <label for="mail">Email:</label>
+        <label id="emailLabel" for="mail">Email:</label>
         <input type="email" id="mail" name="user-email">
 
         <label for="title">Job Role</label>
@@ -78,7 +78,7 @@
       </fieldset>
 
       <fieldset class="activities">
-        <legend>Register for Activities</legend>
+        <legend id="activityLabel">Register for Activities</legend>
           <label>
             <input id="all" type="checkbox" name="all" data-cost="200"> Main Conference — $200
           </label>
@@ -111,7 +111,7 @@
 
       </fieldset>
       <fieldset>
-        <legend>Payment Info</legend>
+        <legend id="paymentLabel">Payment Info</legend>
 
         <label for="payment">I'm going to pay with:</label>
         <select id="payment" name="user-payment">
@@ -124,17 +124,17 @@
         <div id="credit-card" class="credit-card">
 
           <div class="col-6 col">
-            <label for="cc-num">Card Number:</label>
+            <label id="ccLabel" for="cc-num">Card Number:</label>
         	  <input id="cc-num" name="user-cc-num" type="text">
           </div>
 
           <div class="col-3 col">
-            <label for="zip">Zip Code:</label>
+            <label id= "zipLabel" for="zip">Zip Code:</label>
             <input id="zip" name="user-zip" type="text">
           </div>
 
           <div class="col-3 col">
-            <label for="cvv">CVV:</label>
+            <label id= "cvvLabel" for="cvv">CVV:</label>
             <input id="cvv" name="user-cvv" type="text">
           </div>
 

@@ -46,56 +46,136 @@ var invalidCVV = (/^[\d]{3}$/);
 // variable that selects the submit button
 var $submit = $("button");
 
+// variable that will increase when an error is detected and hold the amount of errors
+var errors = 0;
+
+// variables that have selected the labels of the validated info
+var nameLabel = document.getElementById('nameLabel');
+var emailLabel = document.getElementById('emailLabel');
+var activityLabel = document.getElementById("activityLabel");
+var paymentLabel = document.getElementById("paymentLabel");
+var ccLabel = document.getElementById('ccLabel');
+var zipLabel = document.getElementById('zipLabel');
+var cvvLabel = document.getElementById('cvvLabel');
+
+
 // function that will stop the submit if invalid information is spotted
 $submit.on("click", function(event){
   // conditional that checks if name is valid
   if(invalidName.test($nameElem.val()) == true){
+    // displays error message if invalid
+    nameLabel.style.color = 'red';
+    nameLabel.innerHTML = 'Name: (Whoops: Invalid Name)';
     event.preventDefault();
-    // displays alert message saying name is invalid
-    alert("Whoops: Invalid Name");
+    errors += 1;
+  }else{
+    // takes away error message
+    nameLabel.style.color = 'steelblue';
+    nameLabel.innerHTML = 'Name: ';
+    errors -= 1;
+  }
 
     // another conditional that checks if email is valid and formatted
-  } else if (validEmail.test($("#mail").val()) == false){
-    event.preventDefault();
-    // displays alert message saying email is invalid
-    alert("Whoops: Invalid Email");
+    if (validEmail.test($("#mail").val()) == false){
+      // displays error message if invalid
+      emailLabel.style.color = 'red';
+      emailLabel.innerHTML = "Email: (Whoops: Invalid Email)"
+      event.preventDefault();
+      errors += 1;
+    }else{
+      // takes away error message
+      emailLabel.style.color = 'steelblue';
+      emailLabel.innerHTML = 'Email: ';
+      errors -= 1;
+    }
 
     // another conditional that checks if you've selected an activity or not
     // checks the length(amount) of how many check boxes have been checked
     // if length(amount) is equal to 7 (number at which none of the activity boxes are checked)
     // (because apparently the options under colors for t-shirts count as checked)
     // then do the following...
-  } else if ($(":checked").length === 7){
-    event.preventDefault();
-    // displays alert message saying that you haven't chosen an activity
-    alert("Whoops: You need to select an Activity");
+    if ($(":checked").length === 7){
+      // displays error message if no activity has been selected
+      activityLabel.style.color = 'red';
+      activityLabel.innerHTML = 'Register for Activities: (Whoops: You need to choose an activity)';
+      event.preventDefault();
+      errors += 1;
+    }else{
+      // takes away error message
+      activityLabel.style.color = 'steelblue';
+      activityLabel.innerHTML = 'Register for Activities';
+      errors -= 1;
+    }
 
     // conditional that checks if credit card option has been selected
-  } else if($paymentOption.val() == "credit card"){
+    if($paymentOption.val() == "credit card"){
     // nested conditional that checks when cc payment option is Selected
     // also checks if cc number is valid
       if(invalidCC.test($("#cc-num").val()) == false){
+        // displays error message if cc is invalid
+        ccLabel.style.color = 'red';
+        ccLabel.innerHTML = 'Card Number: (Invalid)';
         event.preventDefault();
-        // displays alert message saying invalid cc number
-        alert("Whoops: Invalid Credit Card Number");
-
-        // conditional that checks if zip code is valid
-      }else if (invalidZip.test($("#zip").val()) == false){
-        event.preventDefault();
-        // displays alert message saying zip is invalid
-        alert("Whoops: Invalid Zip Code");
-
-        // conditional that checks if cvv is valid
-      }else if (invalidCVV.test($("#cvv").val()) == false){
-        event.preventDefault();
-        // displays alert message saying cvv is invalid
-        alert("Whoops: Invalid CVV");
+        errors += 1;
+      }else{
+        // takes away error message
+        ccLabel.style.color = 'steelblue';
+        ccLabel.innerHTML = 'Card Number:';
+        errors -= 1;
       }
+
+      if(invalidZip.test($("#zip").val()) == false){
+        // displays error message if zip is invalid
+        zipLabel.style.color = 'red';
+        zipLabel.innerHTML = 'Zip Code: (Invalid)';
+        event.preventDefault();
+        errors +=1;
+      }else{
+        // takes away error message
+        zipLabel.style.color = 'steelblue';
+        zipLabel.innerHTML = 'Zip Code:';
+        errors -=1;
+      }
+
+      if(invalidCVV.test($("#cvv").val()) == false){
+        // displays error message if cvv is invalid
+        cvvLabel.style.color = 'red';
+        cvvLabel.innerHTML = 'CVV: (Invalid)';
+        event.preventDefault();
+        errors += 1;
+      }else{
+        // takes away error message
+        cvvLabel.style.color = 'steelblue';
+        cvvLabel.innerHTML = 'CVV:';
+        errors -= 1;
+      }
+    }
+
+    // conditional that makes sure that form can't be submitted if user hasn't
+    // selected a payment method
+    if($paymentOption.val() == "select method"){
+      // displays error message if payment has not been selected
+      paymentLabel.style.color = 'red';
+      paymentLabel.innerHTML = 'Payment Info: (Whoops: You forgot to choose a payment method)';
+      event.preventDefault();
+      errors += 1;
+    }else{
+      // takes away error message
+      paymentLabel.style.color = 'steelblue';
+      paymentLabel.innerHTML = 'Payment Info';
+      errors -= 1;
+    }
+
+    // since the user can't tell if anything at the top of the page is invalid
+    // conditional checks if the form has any errors and will display an alert
+    if(errors > 0){
+      alert('Uh oh. Looks like you submitted invalid info.');
     }
 });
 
+$paymentOption.val('select method').hide();
 // initially selects credit card
-$paymentOption.val("credit card");
+$paymentOption.val("credit card").show();
 
 // initially hides everything until payment option is chosen
 $payPal.hide();
